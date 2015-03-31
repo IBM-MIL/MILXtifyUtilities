@@ -6,7 +6,7 @@ Licensed Materials - Property of IBM
 import UIKit
 
 protocol DataUtilsDelegate {
-    func pendingNotificationsReceived(jsonDictionary: NSDictionary)
+    func richNotificationsReceived(jsonDictionary: NSDictionary)
 }
 
 /**
@@ -23,7 +23,7 @@ class DataUtils {
     
     :param: richID determines if we are getting an individual notification by ID or gathering all pending notifications
     */
-    func pendingNotificaitonRequest(richID: String) {
+    func richNotificationsRequest(richID: String) {
         
         var url = ""
         // if richID exists, find specific rich notification
@@ -42,7 +42,7 @@ class DataUtils {
                 var err: AutoreleasingUnsafeMutablePointer<NSError?> = nil
                 if let jsonResult: NSDictionary! = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: err) as? NSDictionary {
                     if jsonResult != nil {
-                        self.dataDelegate.pendingNotificationsReceived(jsonResult)
+                        self.dataDelegate.richNotificationsReceived(jsonResult)
                     }
                 }
             } else if error == nil && data.length == 0 {

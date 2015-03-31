@@ -88,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, DataUtilsDelegate {
             
             var dataUtils = DataUtils()
             dataUtils.dataDelegate = self
-            dataUtils.pendingNotificaitonRequest(value)
+            dataUtils.richNotificationsRequest(value)
             return
         }
         
@@ -117,7 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, DataUtilsDelegate {
     
     :param: jsonDictionary a dictionary of json data from Xtify
     */
-    func pendingNotificationsReceived(jsonDictionary: NSDictionary) {
+    func richNotificationsReceived(jsonDictionary: NSDictionary) {
         
         if let response = jsonDictionary["response"] as? String {
             
