@@ -13,16 +13,16 @@ Assuming you already have the [Xtify SDK implemented](http://developer.xtify.com
 *To view a more complete demo of using these utilities, check out the `AppDelegate.swift` file in this repo.*
 
 #### Receiving Notifications
-1. Once you have received a notification through the `didReceiveRemoteNotification` method in AppDelegate, test to see if a Rich Notificaiton ID is present.
+1. Once you have received a notification through the `didReceiveRemoteNotification` method in AppDelegate, test to see if a Rich Notification ID is present.
 2. If so, setup DataUtils in order to retrieve the rich notification. Example:
 	```swift
 	var dataUtils = DataUtils()
 	dataUtils.dataDelegate = self
-	dataUtils.pendingNotificaitonRequest(value) // value is rich notification ID
+	dataUtils.richNotificationRequest(value) // value is rich notification ID
 	```
 3. Setup the DataUtils delegate method.
         
-        func pendingNotificationsReceived(jsonDictionary: NSDictionary)
+        func richNotificationsReceived(jsonDictionary: NSDictionary)
 
 #### Saving Notifications
 1. Create a `NotificationData` object from the jsonDictionary received from the delegate method.
