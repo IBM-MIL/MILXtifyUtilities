@@ -36,7 +36,7 @@ class NotificationDataList: NSObject {
         decodedDictionary = NSMutableDictionary()
         
         for (key, data) in tempDict {
-            var unarchived = NSKeyedUnarchiver.unarchiveObjectWithData(data as NSData) as NotificationData
+            var unarchived = NSKeyedUnarchiver.unarchiveObjectWithData(data as! NSData) as! NotificationData
             decodedDictionary?.setObject(unarchived, forKey: unarchived.keyTimestamp)
         }
     }
@@ -119,7 +119,7 @@ class NotificationDataList: NSObject {
     func sortWithCategory(category: String) -> [NotificationData] {
         
         var filteredData = [NotificationData]()
-        var allVals = self.decodedDictionary?.allValues as [NotificationData]
+        var allVals = self.decodedDictionary?.allValues as! [NotificationData]
         
         if category == stringCategories[0] { // category == All Notifications
             return allVals
