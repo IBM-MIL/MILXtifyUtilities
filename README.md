@@ -6,7 +6,7 @@ MILXtifyUtilities is a collection of [Xtify](https://console.xtify.com/) utiliti
 
 ## Installation
 
-Assuming you already have the [Xtify SDK implemented](http://developer.xtify.com/display/sdk/Getting+Started+with+Apple+Push+Notification+Service) in your project, copy all 4 swift files in the MILXtifyUtilities directory into your project.
+Assuming you already have the [Xtify SDK implemented](http://developer.xtify.com/display/sdk/Getting+Started+with+Apple+Push+Notification+Service) in your project, copy all of the swift files in the MILXtifyUtilities directory into your project.
 
 ## Usage
 
@@ -94,6 +94,32 @@ dataUtils.richNotificationsRequest(value) // value is rich notification ID
     <td>Array of string categories that should be modified to match the categories you wan to to support, if any.</td>
   </tr>
 </table>
+
+## Tagging
+
+You can also apply tags to specific users to be used in sending targeted notifications.
+Tags have two properties, a name and isSet which determines whether you want the tag to be set on a user or not.
+
+### Adding/Updating Tags
+
+Adding/Updating tags is relatively straightforward. First create the tag you wish to set:
+
+self.sampleTag = XLTag(tagName: "MIL", isSet: true)
+
+Then notify the manager changes have been made and add the tag you wish to update:
+
+XLTagManager.sharedInstance.notifyTagsChanged(true);
+XLTagManager.sharedInstance.updatedTag(sampleTag);
+
+To remove a tag, simply set its isSet value to false and call the same function:
+
+sampleTag.setIsSet(false);
+XLTagManager.sharedInstance.notifyTagsChanged(true);
+XLTagManager.sharedInstance.updatedTag(sampleTag);
+
+Once you are done updating the user's tags, tell the manager to upload all the updates back to Xtify:
+
+XLTagManager.sharedInstance.sendTagsToServerBulk();'
 
 ## Requirements
 * MILXtifyUtilities has only been tested to work with iOS 8+
