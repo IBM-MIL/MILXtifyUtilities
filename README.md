@@ -16,11 +16,11 @@ Assuming you already have the [Xtify SDK implemented](http://developer.xtify.com
 1. Once you have received a notification through the `didReceiveRemoteNotification` method in AppDelegate, test to see if a Rich Notification ID is present.
 2. If so, setup DataUtils in order to retrieve the rich notification. Example:
 
-````
-var dataUtils = DataUtils()
-dataUtils.dataDelegate = self
-dataUtils.richNotificationsRequest(value) // value is rich notification ID
-````
+	````
+	var dataUtils = DataUtils()
+	dataUtils.dataDelegate = self
+	dataUtils.richNotificationsRequest(value) // value is rich notification ID
+	````
 
 3. Setup the DataUtils delegate method.
         
@@ -98,28 +98,36 @@ dataUtils.richNotificationsRequest(value) // value is rich notification ID
 ## Tagging
 
 You can also apply tags to specific users to be used in sending targeted notifications.
-Tags have two properties, a name and isSet which determines whether you want the tag to be set on a user or not.
+Tags have two properties, a `name` and `isSet` which determines whether you want the tag to be set on a user or not.
 
 ### Adding/Updating Tags
 
 Adding/Updating tags is relatively straightforward. First create the tag you wish to set:
 
+```
 self.sampleTag = XLTag(tagName: "MIL", isSet: true)
+```
 
-Then notify the manager changes have been made and add the tag you wish to update:
+Then notify the manager, changes have been made and add the tag you wish to update:
 
-XLTagManager.sharedInstance.notifyTagsChanged(true);
-XLTagManager.sharedInstance.updatedTag(sampleTag);
+```
+XLTagManager.sharedInstance.notifyTagsChanged(true)
+XLTagManager.sharedInstance.updatedTag(sampleTag)
+```
 
 To remove a tag, simply set its isSet value to false and call the same function:
 
+```
 sampleTag.setIsSet(false);
-XLTagManager.sharedInstance.notifyTagsChanged(true);
-XLTagManager.sharedInstance.updatedTag(sampleTag);
+XLTagManager.sharedInstance.notifyTagsChanged(true)
+XLTagManager.sharedInstance.updatedTag(sampleTag)
+```
 
 Once you are done updating the user's tags, tell the manager to upload all the updates back to Xtify:
 
-XLTagManager.sharedInstance.sendTagsToServerBulk();'
+```
+XLTagManager.sharedInstance.sendTagsToServerBulk()
+```
 
 ## Requirements
 * MILXtifyUtilities has only been tested to work with iOS 8+
