@@ -37,9 +37,9 @@ class NotificationData: NSObject {
             self.title = tempTitle
         }
         
-        var aps = notificationJson["aps"] as Dictionary<NSObject, AnyObject>
-        var alert = aps["alert"] as Dictionary<NSObject, AnyObject>
-        var bodyText = alert["body"] as String
+        var aps = notificationJson["aps"] as! Dictionary<NSObject, AnyObject>
+        var alert = aps["alert"] as! Dictionary<NSObject, AnyObject>
+        var bodyText = alert["body"] as! String
         self.body = bodyText.htmlToText()
         
         self.keyTimestamp = self.createTimeStamp(NSDate())
@@ -94,10 +94,10 @@ class NotificationData: NSObject {
     
     init(coder aDecoder: NSCoder!) {
 
-        self.title = aDecoder.decodeObjectForKey("title") as String
-        self.body = aDecoder.decodeObjectForKey("body") as String
-        self.keyTimestamp = aDecoder.decodeObjectForKey("keyTimestamp") as String
-        self.timestamp = aDecoder.decodeObjectForKey("timestamp") as NSDate
+        self.title = aDecoder.decodeObjectForKey("title") as! String
+        self.body = aDecoder.decodeObjectForKey("body") as! String
+        self.keyTimestamp = aDecoder.decodeObjectForKey("keyTimestamp") as! String
+        self.timestamp = aDecoder.decodeObjectForKey("timestamp") as! NSDate
         self.isRead = aDecoder.decodeBoolForKey("isRead") as Bool
         self.actionJson = aDecoder.decodeObjectForKey("actionJson") as? Dictionary<NSObject, AnyObject>
         self.category = aDecoder.decodeObjectForKey("category") as? String

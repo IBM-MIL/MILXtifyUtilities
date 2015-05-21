@@ -42,7 +42,7 @@ class DataUtils {
                 var err: AutoreleasingUnsafeMutablePointer<NSError?> = nil
                 if let jsonResult: NSDictionary! = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: err) as? NSDictionary {
                     if jsonResult != nil {
-                        self.dataDelegate.richNotificationsReceived(jsonResult)
+                        self.dataDelegate.richNotificationsReceived(jsonResult!)
                     }
                 }
             } else if error == nil && data.length == 0 {

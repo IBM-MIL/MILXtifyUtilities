@@ -7,18 +7,18 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, DataUtilsDelegate {
-
+    
     var window: UIWindow?
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         return true
     }
-
+    
     func applicationWillResignActive(application: UIApplication) {
-
+        
     }
-
+    
     func applicationDidEnterBackground(application: UIApplication) {
         println("Application is about to Enter Background")
         
@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, DataUtilsDelegate {
         println("Succeeded registering for push notifications. Dev Token: \(deviceToken)")
         XLappMgr.get().registerWithXtify(deviceToken)
     }
-
+    
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         println("Recieving notification from any app state")
         
@@ -111,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, DataUtilsDelegate {
         alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "n/a"), style: .Default, handler: nil))
         self.window?.rootViewController?.presentViewController(alertView, animated: true, completion: nil)
     }
-
+    
     /**
     Delegate method to receive json data from API call
     
@@ -127,7 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, DataUtilsDelegate {
                 if let messages = jsonDictionary["messages"] as? NSArray {
                     dispatch_async(dispatch_get_main_queue(),{
                         for dictionaryData in messages {
-                            var notificationData = NotificationData(richNotificationJson: dictionaryData as Dictionary<NSObject, AnyObject>)
+                            var notificationData = NotificationData(richNotificationJson: dictionaryData as! Dictionary<NSObject, AnyObject>)
                             DataUtils.saveNotificationLocally(notificationData)
                             
                             // Alerts have no other purpose than to allow you to see the notification data on your device
