@@ -2,7 +2,7 @@ MILXtifyUtilities
 =======================
 
 
-MILXtifyUtilities is a collection of [Xtify](https://console.xtify.com/) utilities to make notifications easier to work with. The utilities consist of a notification data model, helper methods to save notifications in `NSUserDefaults` rich notification API helper method.
+MILXtifyUtilities is a collection of [Xtify](https://console.xtify.com/) utilities to make notifications easier to work with. The utilities consist of a notification data model, helper methods to save notifications in `NSUserDefaults`, and rich notification API helper methods.
 
 ## Installation
 
