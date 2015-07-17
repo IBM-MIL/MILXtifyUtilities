@@ -199,15 +199,15 @@
 		2E6CB0071AA4D6D10090BC5E /* SamplePush */ = {
 			isa = PBXGroup;
 			children = (
+				2E6CB0861AA5142D0090BC5E /* SamplePush-Bridging-Header.h */,
 				2E6CB00A1AA4D6D10090BC5E /* AppDelegate.swift */,
-				2E6CB08D1AA5167F0090BC5E /* Frameworks */,
+				2E6CB00C1AA4D6D10090BC5E /* ViewController.swift */,
 				2E6CB0111AA4D6D10090BC5E /* Images.xcassets */,
+				2E6CB08D1AA5167F0090BC5E /* Frameworks */,
 				2E6CB0131AA4D6D10090BC5E /* LaunchScreen.xib */,
 				2E6CB00E1AA4D6D10090BC5E /* Main.storyboard */,
 				2E3104D51B59AAFE001C3EEB /* MILXtifyUtilities */,
-				2E6CB0861AA5142D0090BC5E /* SamplePush-Bridging-Header.h */,
 				2E6CB0081AA4D6D10090BC5E /* Supporting Files */,
-				2E6CB00C1AA4D6D10090BC5E /* ViewController.swift */,
 				2E6CB02D1AA50FE00090BC5E /* XtifyLib */,
 			);
 			path = SamplePush;
