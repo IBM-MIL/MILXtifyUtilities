@@ -10,7 +10,7 @@ Assuming you already have the [Xtify SDK implemented](http://developer.xtify.com
 
 ## Usage
 
-*To view a more complete demo of using these utilities, check out the `AppDelegate.swift` file in this repo.*
+*To view a more complete demo of using these utilities, check out the SimplePush project under the Example directory.*
 
 #### Receiving Notifications
 1. Once you have received a notification through the `didReceiveRemoteNotification` method in AppDelegate, test to see if a Rich Notification ID is present.
@@ -131,6 +131,7 @@ XLTagManager.sharedInstance.sendTagsToServerBulk()
 
 ## Requirements
 * MILXtifyUtilities has only been tested to work with iOS 8+
+* The Example project was built using Xtify SDK 1.77, but can easily updated to future [SDK releases](http://developer.xtify.com/display/sdk/Download+the+IBM+Push+Notification+SDKs)
 
 ## Author
 
@@ -140,4 +141,8 @@ Created by [Taylor Franklin](https://github.com/tfrank64)
 ## License
 
 MILXtifyUtilities is available under the Apache 2.0 license. See the LICENSE file for more info.
+
+## Sample App License
+The SimplePush sample application is available under the Apple SDK Sample Code License. Details in the file called `SAMPLE_APP_LICENSE` under the Example directory.
+
 

@@ -14,6 +14,7 @@ class ViewController: UIViewController {
         var filteredValues = dataList.sortWithCategory("Unread Notifications")
         var sorted = NotificationDataList.sortByDate(filteredValues)
         
+        // TODO: create more elaborate example view to display notifications
     }
 
     override func didReceiveMemoryWarning() {
