@@ -10,9 +10,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        var dataList = NotificationDataList(key: "notificationData")
-        var filteredValues = dataList.sortWithCategory("Unread Notifications")
-        var sorted = NotificationDataList.sortByDate(filteredValues)
+        let dataList = NotificationDataList(key: "notificationData")
+        let filteredValues = dataList.sortWithCategory("Unread Notifications")
+        _ = NotificationDataList.sortByDate(filteredValues)
         
         // TODO: create more elaborate example view to display notifications
     }
