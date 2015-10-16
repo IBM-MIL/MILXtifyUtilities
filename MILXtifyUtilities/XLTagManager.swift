@@ -38,7 +38,7 @@ public class XLTagManager {
         }
         
         let xtifyID : String? = XLappMgr.get().getXid();
-        if let xid = xtifyID {
+        if let _ = xtifyID {
             let tagdic : [XLTag] = self.recentTags;
             
             var toBeTagged = [String]();
