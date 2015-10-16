@@ -13,14 +13,14 @@ extension String {
     /**
     Method simply strips out any html within a string, note, this method needs to be called on the main thread
     
-    :param: html string with html formatting
+    - parameter html: string with html formatting
     
-    :returns: string with no html
+    - returns: string with no html
     */
     func htmlToText() -> String {
 
-        var data = self.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)
-        var attrStr = NSAttributedString(data: data!, options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType ], documentAttributes: nil, error: nil)
+        let data = self.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)
+        let attrStr = try? NSAttributedString(data: data!, options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType ], documentAttributes: nil)
         
         return attrStr!.string
     }

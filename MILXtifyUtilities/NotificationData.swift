@@ -28,7 +28,7 @@ class NotificationData: NSObject {
     /**
      For standard push notifications with title and body fields
     
-    :param: notificationJson A json dictionary of notification data
+    - parameter notificationJson: A json dictionary of notification data
     */
     init(notificationJson: Dictionary<NSObject, AnyObject>) {
         super.init()
@@ -39,7 +39,7 @@ class NotificationData: NSObject {
         
         var aps = notificationJson["aps"] as! Dictionary<NSObject, AnyObject>
         var alert = aps["alert"] as! Dictionary<NSObject, AnyObject>
-        var bodyText = alert["body"] as! String
+        let bodyText = alert["body"] as! String
         self.body = bodyText.htmlToText()
         
         self.keyTimestamp = self.createTimeStamp(NSDate())
@@ -49,7 +49,7 @@ class NotificationData: NSObject {
     /**
     For rich notifications with subject and content fields.
     
-    :param: richNotificationJson A json dictionary of rich notification data
+    - parameter richNotificationJson: A json dictionary of rich notification data
     */
     init(richNotificationJson: Dictionary<NSObject, AnyObject>) {
         super.init()
@@ -67,12 +67,10 @@ class NotificationData: NSObject {
         // such as an image or video
         if let actionData = richNotificationJson["actionData"] as? String {
             if actionData != "" {
-                var error: NSError?
-                var objectData: NSData = actionData.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) as NSData!
-                self.actionJson = NSJSONSerialization.JSONObjectWithData(objectData, options: NSJSONReadingOptions.MutableContainers, error: &error) as? Dictionary<NSObject, AnyObject>
-                
-                // Check if we were able to put json in a dictionary
-                if error == nil {
+                let objectData: NSData = actionData.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) as NSData!
+                do {
+                    try self.actionJson = NSJSONSerialization.JSONObjectWithData(objectData, options: NSJSONReadingOptions.MutableContainers) as? Dictionary<NSObject, AnyObject>
+                    
                     if let category = self.actionJson!["category"] as? String {
                         self.category = category
                     }
@@ -82,6 +80,9 @@ class NotificationData: NSObject {
                     if let mediaName = self.actionJson!["mediaName"] as? String {
                         self.mediaName = mediaName
                     }
+                }
+                catch {
+                    print("NotificationData.init(): error serializing JSON")
                 }
             }
         }
@@ -121,10 +122,10 @@ class NotificationData: NSObject {
     /**
     Method creates a string from an NSDate in the correct format
     
-    :returns: an NSDate formatted String
+    - returns: an NSDate formatted String
     */
     func createTimeStamp(date: NSDate) -> String {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
         return dateFormatter.stringFromDate(date)
@@ -137,7 +138,7 @@ class NotificationData: NSObject {
         
         if !self.isRead {
             self.isRead = true
-            var notificationList = NotificationDataList(key: "notificationData")
+            let notificationList = NotificationDataList(key: "notificationData")
             notificationList.updateNotificationWithKey(self)
         }
         

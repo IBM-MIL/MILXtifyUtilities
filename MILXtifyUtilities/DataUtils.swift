@@ -21,7 +21,7 @@ class DataUtils {
     /**
     Pulls down all pending rich notifications or a specific rich notification
     
-    :param: richID determines if we are getting an individual notification by ID or gathering all pending notifications
+    - parameter richID: determines if we are getting an individual notification by ID or gathering all pending notifications
     */
     func richNotificationsRequest(richID: String) {
         
@@ -33,24 +33,34 @@ class DataUtils {
             url = "http://sdk.api.xtify.com/2.0/rn/\(XLappMgr.get().getXid())/pending?appKey=\(XLappMgr.get().currentAppKey)"
         }
         
-        var request = NSMutableURLRequest()
+        let request = NSMutableURLRequest()
         request.URL = NSURL(string: url)
         request.HTTPMethod = "GET"
         
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue(), completionHandler:{ (response:NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            if error == nil && data.length > 0 {
-                var err: AutoreleasingUnsafeMutablePointer<NSError?> = nil
-                if let jsonResult: NSDictionary! = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: err) as? NSDictionary {
-                    if jsonResult != nil {
-                        self.dataDelegate.richNotificationsReceived(jsonResult!)
-                    }
-                }
-            } else if error == nil && data.length == 0 {
-                println("Empty Reply Error: \(error.localizedDescription)")
-            } else {
-                println("Error: \(error.localizedDescription)")
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue(), completionHandler:{ (response:NSURLResponse?, theData: NSData?, theError: NSError?) -> Void in
+            
+            guard let data = theData else {
+                print("DataUtils.richNotificationsRequest(): no data object returned")
+                return
             }
-
+            if let error = theError {
+                print("DataUtils.richNotificationsRequest(): \(error.localizedDescription)")
+                return
+            } else if data.length == 0 {
+                print("DataUtils.richNotificationsRequest(): empty data object returned")
+                return
+            }
+            do {
+                if let jsonResult: NSDictionary! = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary {
+                        self.dataDelegate.richNotificationsReceived(jsonResult!)
+                } else {
+                    print("DataUtils.richNotificationsRequest(): Error serializing JSON")
+                }
+            } catch {
+                print("DataUtils.richNotificationsRequest(): Error serializing JSON")
+            }
+            
+ 
         })
         
     }
@@ -58,19 +68,19 @@ class DataUtils {
     /**
     Method to grab current notificationDataList, add data to it, and save locally for furture use
     
-    :param: notificationData NotificationData to be saved
+    - parameter notificationData: NotificationData to be saved
     
-    :returns: Modified NotificationDataList
+    - returns: Modified NotificationDataList
     */
     class func saveNotificationLocally(notificationData: NotificationData) -> Bool {
         
-        if var notifCategory = notificationData.category {
+        if let _ = notificationData.category {
             
             if let dataList = NotificationDataList.loadSaved("notificationData") {
                 dataList.add(notificationData)
                 return true
             } else {
-                var dataList = NotificationDataList(key: "notificationData")
+                let dataList = NotificationDataList(key: "notificationData")
                 dataList.add(notificationData)
                 return true
             }

@@ -23,7 +23,7 @@ public class XLTagManager {
     /**
     Method to add tags to local recent tags, to be used later in server update
     
-    :param: tag XLTag to add
+    - parameter tag: XLTag to add
     */
     func updatedTag(tag : XLTag) {
         self.recentTags.append(tag);
@@ -37,9 +37,9 @@ public class XLTagManager {
             return;
         }
         
-        var xtifyID : String? = XLappMgr.get().getXid();
-        if let xid = xtifyID {
-            var tagdic : [XLTag] = self.recentTags;
+        let xtifyID : String? = XLappMgr.get().getXid();
+        if let _ = xtifyID {
+            let tagdic : [XLTag] = self.recentTags;
             
             var toBeTagged = [String]();
             var toBeUntagged = [String]();
@@ -63,9 +63,9 @@ public class XLTagManager {
     }
     
     /**
-    Method to notifiy XLTagManager that tags have been changed and should be updated later
+    Method to notify XLTagManager that tags have been changed and should be updated later
     
-    :param: value boolean to dermine if tags changed
+    - parameter value: boolean to dermine if tags changed
     */
     func notifyTagsChanged(value : Bool){
         self.tagsChanged = value;
@@ -74,8 +74,8 @@ public class XLTagManager {
     /**
     Simplified bulk tag update which sets an array of tags to be updated and then calls `sendTagsToServerBulk`
     
-    :param: tags   array of tags in string format
-    :param: toKeep if true, we are adding tags in array, if false, we are removing all tags in array
+    - parameter tags:   array of tags in string format
+    - parameter toKeep: if true, we are adding tags in array, if false, we are removing all tags in array
     */
     func updateWithTags(tags: [String], toKeep: Bool) {
         
@@ -89,7 +89,7 @@ public class XLTagManager {
     }
     
     /**
-    Helper metho to simply reset all tags for this user on the Xtify servers
+    Helper method to simply reset all tags for this user on the Xtify servers
     */
     func resetRemoteTags() {
         XLappMgr.get().setTag(NSMutableArray())
