@@ -21,23 +21,26 @@ public class XLTagManager {
     }
     
     /**
-    * Sets a tag that has been updated recently
-    **/
+    Method to add tags to local recent tags, to be used later in server update
+    
+    - parameter tag: XLTag to add
+    */
     func updatedTag(tag : XLTag) {
         self.recentTags.append(tag);
     }
+    
     /**
-    * Uploads updated tags to the Xtify service, does nothing if no tags have been
-    **/
+    Method to update server with tags to be added and removed
+    */
     func sendTagsToServerBulk() {
         if(!tagsChanged) {
             return;
         }
-    
-        var xtifyID : String? = XLappMgr.get().getXid();
+        
+        let xtifyID : String? = XLappMgr.get().getXid();
         if let xid = xtifyID {
-            var tagdic : [XLTag] = self.recentTags;
-    
+            let tagdic : [XLTag] = self.recentTags;
+            
             var toBeTagged = [String]();
             var toBeUntagged = [String]();
             for tag in tagdic {
@@ -47,21 +50,48 @@ public class XLTagManager {
                     toBeUntagged.append(tag.getTagName());
                 }
             }
-    
+            
             if(toBeTagged.count > 0) {
                 XLappMgr.get().addTag(NSMutableArray(array: toBeTagged));
             }
             if(toBeUntagged.count > 0) {
-                XLappMgr.get().addTag(NSMutableArray(array: toBeUntagged));
+                XLappMgr.get().unTag(NSMutableArray(array: toBeUntagged))
             }
             self.tagsChanged = false;
             self.recentTags  = [XLTag]();
         }
     }
+    
     /**
-    * Lets the Manager know tags have changed
-    **/
+    Method to notify XLTagManager that tags have been changed and should be updated later
+    
+    - parameter value: boolean to dermine if tags changed
+    */
     func notifyTagsChanged(value : Bool){
         self.tagsChanged = value;
+    }
+    
+    /**
+    Simplified bulk tag update which sets an array of tags to be updated and then calls `sendTagsToServerBulk`
+    
+    - parameter tags:   array of tags in string format
+    - parameter toKeep: if true, we are adding tags in array, if false, we are removing all tags in array
+    */
+    func updateWithTags(tags: [String], toKeep: Bool) {
+        
+        for tag in tags {
+            XLTagManager.sharedInstance.updatedTag(XLTag(tagName: tag, isSet: toKeep))
+        }
+        
+        XLTagManager.sharedInstance.notifyTagsChanged(true)
+        XLTagManager.sharedInstance.sendTagsToServerBulk()
+        
+    }
+    
+    /**
+    Helper method to simply reset all tags for this user on the Xtify servers
+    */
+    func resetRemoteTags() {
+        XLappMgr.get().setTag(NSMutableArray())
     }
 }

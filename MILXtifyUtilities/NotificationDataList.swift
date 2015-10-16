@@ -32,11 +32,11 @@ class NotificationDataList: NSObject {
     Essentially populates the decodedDictionary with a decoded version of everything in the encodedDictionary
     */
     private func populateAndDecode() {
-        var tempDict = NSDictionary(dictionary: encodedDictionary!)
+        let tempDict = NSDictionary(dictionary: encodedDictionary!)
         decodedDictionary = NSMutableDictionary()
         
-        for (key, data) in tempDict {
-            var unarchived = NSKeyedUnarchiver.unarchiveObjectWithData(data as! NSData) as! NotificationData
+        for (_, data) in tempDict {
+            let unarchived = NSKeyedUnarchiver.unarchiveObjectWithData(data as! NSData) as! NotificationData
             decodedDictionary?.setObject(unarchived, forKey: unarchived.keyTimestamp)
         }
     }
@@ -44,10 +44,10 @@ class NotificationDataList: NSObject {
     /**
     Load saved data, if any available
     
-    :returns: NotificationDataList object if already created
+    - returns: NotificationDataList object if already created
     */
     class func loadSaved(key: String) -> NotificationDataList? {
-        if let data = DataAPI.objectForKey(key) as? NSMutableDictionary {
+        if let _ = DataAPI.objectForKey(key) as? NSMutableDictionary {
             return NotificationDataList(key: key)
         }
         return nil
@@ -56,13 +56,13 @@ class NotificationDataList: NSObject {
     /**
     Inserts data into both, already created dictionaries
     
-    :param: data NotificationData object to add
+    - parameter data: NotificationData object to add
     */
     func add(data: NotificationData) {
         
         self.decodedDictionary?.setObject(data, forKey: data.keyTimestamp)
         
-        var encoded = NSKeyedArchiver.archivedDataWithRootObject(data)
+        let encoded = NSKeyedArchiver.archivedDataWithRootObject(data)
         self.encodedDictionary?.setObject(encoded, forKey: data.keyTimestamp)
         self.save()
     }
@@ -70,7 +70,7 @@ class NotificationDataList: NSObject {
     /**
     Method to remove an object from the notificationDataList and from NSUserDefaults
     
-    :param: data data object to be removed
+    - parameter data: data object to be removed
     */
     func remove(data: NotificationData) {
         self.decodedDictionary?.removeObjectForKey(data.keyTimestamp)
@@ -89,8 +89,8 @@ class NotificationDataList: NSObject {
     /**
     Update already created dictionaries with updated values on a NotificationData
     
-    :param: key        dictionary key for object to update
-    :param: dataObject the modified data object
+    - parameter key:        dictionary key for object to update
+    - parameter dataObject: the modified data object
     */
     func updateNotificationWithKey(dataObject: NotificationData) {
         
@@ -112,14 +112,14 @@ class NotificationDataList: NSObject {
     /**
     Method to collect the data by category, only use if you have implemented category on NotificationData
     
-    :param: category category to filter data by
+    - parameter category: category to filter data by
     
-    :returns: an array of NotificationData
+    - returns: an array of NotificationData
     */
     func sortWithCategory(category: String) -> [NotificationData] {
         
         var filteredData = [NotificationData]()
-        var allVals = self.decodedDictionary?.allValues as! [NotificationData]
+        let allVals = self.decodedDictionary?.allValues as! [NotificationData]
         
         if category == stringCategories[0] { // category == All Notifications
             return allVals
@@ -148,13 +148,13 @@ class NotificationDataList: NSObject {
     /**
     Method to sort a NotificationData array by timestamp, an NSDate object
     
-    :param: data array of data to sort
+    - parameter data: array of data to sort
     
-    :returns: sorted NotificationData array
+    - returns: sorted NotificationData array
     */
     class func sortByDate(data: [NotificationData]) -> [NotificationData] {
         var mutableSorted = data
-        mutableSorted.sort({ $0.timestamp.compare($1.timestamp) == NSComparisonResult.OrderedDescending })
+        mutableSorted.sortInPlace({ $0.timestamp.compare($1.timestamp) == NSComparisonResult.OrderedDescending })
         return mutableSorted as [NotificationData]
     }
     
